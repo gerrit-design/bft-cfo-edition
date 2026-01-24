@@ -215,31 +215,33 @@ export default function App() {
 
     return (
       <div className="flex flex-col items-center">
-        <svg width={size} height={size} className="-rotate-90">
-          <circle
-            cx={size / 2}
-            cy={size / 2}
-            r={radius}
-            fill="none"
-            stroke="#e5e7eb"
-            strokeWidth={strokeWidth}
-          />
-          <circle
-            cx={size / 2}
-            cy={size / 2}
-            r={radius}
-            fill="none"
-            stroke="#10b981"
-            strokeWidth={strokeWidth}
-            strokeLinecap="round"
-            strokeDasharray={circumference}
-            strokeDashoffset={strokeDashoffset}
-            style={{ transition: 'stroke-dashoffset 0.5s ease' }}
-          />
-        </svg>
-        <div className="absolute flex flex-col items-center justify-center" style={{ width: size, height: size }}>
-          <span className="text-lg font-bold text-stone-800">{value}</span>
-          {sublabel && <span className="text-[9px] text-stone-500">{sublabel}</span>}
+        <div className="relative" style={{ width: size, height: size }}>
+          <svg width={size} height={size} className="-rotate-90 absolute inset-0">
+            <circle
+              cx={size / 2}
+              cy={size / 2}
+              r={radius}
+              fill="none"
+              stroke="#e5e7eb"
+              strokeWidth={strokeWidth}
+            />
+            <circle
+              cx={size / 2}
+              cy={size / 2}
+              r={radius}
+              fill="none"
+              stroke="#10b981"
+              strokeWidth={strokeWidth}
+              strokeLinecap="round"
+              strokeDasharray={circumference}
+              strokeDashoffset={strokeDashoffset}
+              style={{ transition: 'stroke-dashoffset 0.5s ease' }}
+            />
+          </svg>
+          <div className="absolute inset-0 flex flex-col items-center justify-center">
+            <span className="text-xl font-bold text-stone-800">{value}</span>
+            {sublabel && <span className="text-[9px] text-stone-500">{sublabel}</span>}
+          </div>
         </div>
         {label && <span className="mt-1 text-xs text-stone-600">{label}</span>}
       </div>
@@ -367,23 +369,20 @@ export default function App() {
                 </div>
 
                 <div className="flex gap-8">
-                  <div className="text-center relative">
-                    <ProgressRing value={summaryMetrics.cashRunway} max={90} size={90} />
-                    <div className="absolute inset-0 flex flex-col items-center justify-center">
-                      <span className="text-xl font-bold">{summaryMetrics.cashRunway}</span>
-                      <span className="text-[9px] text-stone-500">days</span>
-                    </div>
-                    <p className="text-xs text-stone-600 mt-2">Cash Runway</p>
-                  </div>
-
-                  <div className="text-center relative">
-                    <ProgressRing value={summaryMetrics.ruleOf40Score} max={60} size={90} />
-                    <div className="absolute inset-0 flex flex-col items-center justify-center">
-                      <span className="text-xl font-bold">{summaryMetrics.ruleOf40Score}</span>
-                      <span className="text-[9px] text-stone-500">score</span>
-                    </div>
-                    <p className="text-xs text-stone-600 mt-2">Rule of 40</p>
-                  </div>
+                  <ProgressRing
+                    value={summaryMetrics.cashRunway}
+                    max={90}
+                    size={90}
+                    sublabel="days"
+                    label="Cash Runway"
+                  />
+                  <ProgressRing
+                    value={summaryMetrics.ruleOf40Score}
+                    max={60}
+                    size={90}
+                    sublabel="score"
+                    label="Rule of 40"
+                  />
                 </div>
               </div>
             </div>
